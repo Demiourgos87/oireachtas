@@ -1,4 +1,4 @@
-import TestComponent from './components/testComponent/TestComponent';
+import TestComponent from '@components/test-component/test-component';
 
 function App() {
   return (

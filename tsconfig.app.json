@@ -21,7 +21,17 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+
+    /* Types */
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+
+    /* Paths */
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "include": ["src"]
 }
