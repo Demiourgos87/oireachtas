@@ -1,8 +1,20 @@
+import { Button } from '@mui/material';
+import { useState } from 'react';
+
 const TestComponent = () => {
+  const [text, setText] = useState('This is a component for testing purposes.');
+
+  const handleOnClick = () => {
+    console.log('clicked');
+    setText('Some changed text');
+  };
+
   return (
     <section className="test-component">
       <h1>Test Component</h1>
-      <p>This is a component for testing purposes.</p>
+      <p>{text}</p>
+
+      <Button onClick={handleOnClick}>Change text</Button>
     </section>
   );
 };
