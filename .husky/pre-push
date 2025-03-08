@@ -1,0 +1,2 @@
+# Ensures that we are not allowed to push to the remote repository unless our code can successfully build.
+npm run build
