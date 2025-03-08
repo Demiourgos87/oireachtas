@@ -1,5 +1,6 @@
-import { Button } from '@mui/material';
 import { useState } from 'react';
+
+import { Button } from '@mui/material';
 
 const TestComponent = () => {
   const [text, setText] = useState('This is a component for testing purposes.');
