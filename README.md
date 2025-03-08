@@ -1,54 +1,30 @@
-# React + TypeScript + Vite
+# Oireachtas project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The main goal of this demo project is to reflect my idea of what an ideal front-end app should look like, having in mind tooling, structure, and procedures to ensure easy code maintainability and scalability.
 
-Currently, two official plugins are available:
+Second goal would be to demonstrate (hopefully successfully) React best practices and performance optimization techniques.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 1 - Project setup
 
-## Expanding the ESLint configuration
+Please make sure to use node v20 and up.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+git clone git@github.com:Demiourgos87/oireachtas.git
 ```
+```
+cd oireachtas
+```
+```
+npm i
+```
+```
+npm run dev
+```
+The development server starts at [http://localhost:5432](http://localhost:5432) by default.
+
+## 2 - Tooling
+Tools used in this project are:
+- [Vite](https://vite.dev/) as a tooling solution and bundler.
+- [ESLint](https://eslint.org/) to ensure identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+- [Prettier](https://prettier.io/) code formatter to ensure consistent coding style.
+- [Husky](https://typicode.github.io/husky/) for git pre commit and pre push hooks to ensure that code with errors doesn't get pushed to the repo.
