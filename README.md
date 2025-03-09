@@ -40,6 +40,7 @@ Tools and standards used in this project are:
   - pre-commit hook is set up to check for linting errors, and run tests
   - pre-push hook is set up to run the project for production and ensure the application builds before pushing to remote origin
 - Absolute imports, to make it easier to import components, hooks, utils, etc, and avoid messy import paths.
+- When developing the application, always use the `dev` branch, and upon completing the code, a pull request should be made for it to be merged into `main` branch.
 
 
 ## 4 - Project setup
