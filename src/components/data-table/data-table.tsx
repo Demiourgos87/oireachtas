@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import StatusFilter from '@components/status-filter/status-filter';
 import useGetData from '@hooks/use-get-data';
 import {
   Alert,
@@ -20,10 +21,13 @@ import {
 const DataTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const skip = page * rowsPerPage;
-  const { data, loading, error } = useGetData({ rowsPerPage, skip });
+  const { data, loading, error } = useGetData({ rowsPerPage, skip, filterByStatus: statusFilter });
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const resultsCount = data?.head.counts.resultCount ?? 0;
 
   const handlePageChange = (_event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
@@ -34,8 +38,15 @@ const DataTable = () => {
     setRowsPerPage(Number(event.target.value));
   };
 
+  const onFilterChange = (payload: string[]) => {
+    setStatusFilter(payload);
+    setPage(0);
+  };
+
   return (
     <Paper sx={{ padding: '20px' }}>
+      <StatusFilter onFilterChange={onFilterChange} />
+
       <TableContainer sx={{ height: '60vh' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

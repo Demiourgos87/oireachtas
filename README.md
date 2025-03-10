@@ -61,6 +61,11 @@ cd oireachtas
 npm i
 ```
 
+Create a local .env from the example
+```
+cp .env.example .env.local
+```
+
 Run the development server with:
 
 ```

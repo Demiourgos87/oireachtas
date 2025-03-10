@@ -29,7 +29,10 @@
     "baseUrl": "./src/",
     "paths": {
       "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
       "@hooks/*": ["hooks/*"],
+      "@styles/*": ["styles/*"],
+      "@custom-types/*": ["types/*"],
       "@utils/*": ["utils/*"]
     }
   },
