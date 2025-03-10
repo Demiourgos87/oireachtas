@@ -20,6 +20,8 @@ src
 |
 +--hooks        # shared hooks used across the application
 |
++--styles       # shared styles accross the application
+|
 +--types        # shared types used across the application
 |
 +--utils        # shared utility functions
@@ -57,6 +59,11 @@ cd oireachtas
 
 ```
 npm i
+```
+
+Create a local .env from the example
+```
+cp .env.example .env.local
 ```
 
 Run the development server with:
