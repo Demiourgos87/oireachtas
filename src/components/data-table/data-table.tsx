@@ -1,3 +1,5 @@
+import { useDebounce } from 'use-debounce';
+
 import { useState } from 'react';
 
 import StatusFilter from '@components/status-filter/status-filter';
@@ -22,8 +24,13 @@ const DataTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [debouncedStatuses] = useDebounce(statusFilter, 300);
   const skip = page * rowsPerPage;
-  const { data, loading, error } = useGetData({ rowsPerPage, skip, filterByStatus: statusFilter });
+  const { data, loading, error } = useGetData({
+    rowsPerPage,
+    skip,
+    filterByStatus: debouncedStatuses,
+  });
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
