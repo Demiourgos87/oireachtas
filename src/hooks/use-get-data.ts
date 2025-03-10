@@ -40,6 +40,7 @@ const useGetData = ({ rowsPerPage, skip, filterByStatus }: DataParams) => {
       const queryString = buildQueryString();
       const response = await fetch(`${uri}?${queryString}`);
       const data = await response.json();
+
       setData(data);
     } catch (error) {
       setError(error as ErrorResponse);
