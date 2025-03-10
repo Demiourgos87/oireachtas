@@ -77,4 +77,18 @@ Tools and standards used in this project are:
 - When developing the application, always use the `dev` branch, and upon completing the code, a pull request should be made for it to be merged into `main` branch.
 
 
-## 5 - 
+## 5 - API communication
+Since the API is very simple, only `GET` requests, a native browser `fetch` API for retreiving the data is used.
+
+`useGetData` hook handles all communication, including building of the query parameters that are necessary for pagination and filters.
+
+Pagination is handled via the API `limit` and `skip` query parameter.
+
+Filtering uses additional parameter, `bill_status`, and is handled through a multi select component.
+
+
+## 6 - State management
+[Zustand](https://zustand-demo.pmnd.rs/) is used for the favourites functionality, implementing a global store to hold the information on favoured bills, and handle adding/removing them, with persisting the state to local storage.
+
+## Additional considerations
+Some features i would like to have added are snackbars for information on adding or removing a bill from favourites
