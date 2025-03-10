@@ -20,6 +20,8 @@ src
 |
 +--hooks        # shared hooks used across the application
 |
++--styles       # shared styles accross the application
+|
 +--types        # shared types used across the application
 |
 +--utils        # shared utility functions
