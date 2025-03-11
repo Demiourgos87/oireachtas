@@ -31,8 +31,7 @@ const DataTableRow = memo(({ bill }: BillRowProps) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
   const isFavourite = useFavouritesStore((state) => state.isFavourite(bill.shortTitleEn));
-  const addFavourite = useFavouritesStore((state) => state.addFavourite);
-  const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
+  const { addFavourite, removeFavourite } = useFavouritesStore();
 
   const handleToggleModal = (state: boolean) => {
     setModalOpened(state);
@@ -73,8 +72,8 @@ const DataTableRow = memo(({ bill }: BillRowProps) => {
             : ''}
         </TableCell>
         <TableCell>
-          <IconButton onClick={handleToggleFavourite}>
-            <StarIcon sx={{ color: isFavourite ? 'gold' : 'gray' }} />
+          <IconButton onClick={handleToggleFavourite} data-testid="favourite-button">
+            <StarIcon sx={{ color: isFavourite ? 'gold' : 'gray' }} data-testid="star-icon" />
           </IconButton>
         </TableCell>
       </TableRow>
