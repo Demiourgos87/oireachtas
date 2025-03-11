@@ -66,15 +66,16 @@ If a component uses something that is not specific just to itself, then that cod
 
 ## 4 - Tooling and standards
 Tools and standards used in this project are:
-- [Vite](https://vite.dev/) as a tooling solution and bundler.
-- [Vitest](https://vitest.dev/) a performant unit testing framework powered by Vite.
-- [ESLint](https://eslint.org/) to ensure identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
-- [Prettier](https://prettier.io/) code formatter to ensure consistent coding style. Some custom formatting rules are applied, as well as imports sorting.
+- [Vite](https://vite.dev/) as a tooling solution and bundler
+- [Vitest](https://vitest.dev/) a performant unit testing framework powered by Vite
+- [ESLint](https://eslint.org/) to ensure identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs
+- [Prettier](https://prettier.io/) code formatter to ensure consistent coding style. Some custom formatting rules are applied, as well as imports sorting
 - [Husky](https://typicode.github.io/husky/) for implementing and executing git hooks to ensure that code with errors doesn't get pushed to the repository. In the case when pushing something that does not need tests or app building, the checks can be skipped by using the `--no-verify` flag, for example ``` git commit -m "commit description" --no-verify ```
   - pre-commit hook is set up to check for linting errors, and run tests
   - pre-push hook is set up to run the project for production and ensure the application builds before pushing to remote origin
-- Absolute imports, to make it easier to import components, hooks, utils, etc, and avoid messy import paths.
-- When developing the application, always use the `dev` branch, and upon completing the code, a pull request should be made for it to be merged into `main` branch.
+- Utilize .env formanaging environment variables
+- Absolute imports, to make it easier to import components, hooks, utils, etc, and avoid messy import paths
+- When developing the application, always use the `dev` branch, and upon completing the code, a pull request should be made for it to be merged into `main` branch
 
 
 ## 5 - API communication
@@ -89,6 +90,14 @@ Filtering uses additional parameter, `bill_status`, and is handled through a mul
 
 ## 6 - State management
 [Zustand](https://zustand-demo.pmnd.rs/) is used for the favourites functionality, implementing a global store to hold the information on favoured bills, and handle adding/removing them, with persisting the state to local storage.
+
+
+## 7 - Styling
+Since the requirement was MaterialUI, styling relies mostly on its own component styling, utilizing only inline styling where necessary.
+
+
+## 8 - 
+
 
 ## Additional considerations
 Some features i would like to have added are snackbars for information on adding or removing a bill from favourites
