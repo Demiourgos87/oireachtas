@@ -9,7 +9,6 @@ The tech stack used is React with Typescript, and MaterialUI as a component libr
 
 
 ## 2 - Project setup
-
 Please make sure to use Node.js versions 18, 20, or 22+.
 
 ```
@@ -73,7 +72,7 @@ Tools and standards used in this project are:
 - [Husky](https://typicode.github.io/husky/) for implementing and executing git hooks to ensure that code with errors doesn't get pushed to the repository. In the case when pushing something that does not need tests or app building, the checks can be skipped by using the `--no-verify` flag, for example ``` git commit -m "commit description" --no-verify ```
   - pre-commit hook is set up to check for linting errors, and run tests
   - pre-push hook is set up to run the project for production and ensure the application builds before pushing to remote origin
-- Utilize .env formanaging environment variables
+- Utilize .env for managing environment variables
 - Absolute imports, to make it easier to import components, hooks, utils, etc, and avoid messy import paths
 - When developing the application, always use the `dev` branch, and upon completing the code, a pull request should be made for it to be merged into `main` branch
 
@@ -83,7 +82,7 @@ Since the API is very simple, only `GET` requests, a native browser `fetch` API 
 
 `useGetData` hook handles all communication, including building of the query parameters that are necessary for pagination and filters.
 
-Pagination is handled via the API `limit` and `skip` query parameter.
+Pagination is handled via the API `limit` and `skip` query parameters.
 
 Filtering uses additional parameter, `bill_status`, and is handled through a multi select component.
 
@@ -96,7 +95,16 @@ Filtering uses additional parameter, `bill_status`, and is handled through a mul
 Since the requirement was MaterialUI, styling relies mostly on its own component styling, utilizing only inline styling where necessary.
 
 
-## 8 - 
+## 8 - Performance optimizaions
+Performance optimization should only be done if there is a need for it, and is causing issues. Avoid unnecessary use of `useCallback` and `useMemo` hooks unless performance is measured and they actually make impact. Overusing them result in less readable code.
+
+I have provided some simple memoization in the project more as an example, such as memoizing the `DataTableHead` and `DataTableRow` components with `React.memo()`, and calculation of which data source to use in `DataTable` tabs with `useMemo` hook.
+
+Some other performance optimization used is debouncing the clicks on filters.
+
+
+## 9 - Testing
+
 
 
 ## Additional considerations

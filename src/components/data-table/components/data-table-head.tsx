@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import { TableCell, TableHead, TableRow } from '@mui/material';
 
-const DataTableHead = () => {
+const DataTableHead = memo(() => {
   return (
     <TableHead>
       <TableRow>
@@ -13,6 +15,6 @@ const DataTableHead = () => {
       </TableRow>
     </TableHead>
   );
-};
+});
 
 export default DataTableHead;
