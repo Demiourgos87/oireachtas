@@ -9,15 +9,18 @@ import StatusFilter from '@components/status-filter/status-filter';
 import useGetData from '@hooks/use-get-data';
 import {
   Paper,
+  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TablePagination,
   TableRow,
+  Tabs,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import useFavouritesStore from '@stores/favourite-bills-store';
 
 import DataTableHead from './components/data-table-head';
 import DataTableRow from './components/data-table-row';
@@ -26,13 +29,18 @@ const DataTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
-  const [debouncedStatuses] = useDebounce(statusFilter, 300);
+  const [debouncedStatuses] = useDebounce(statusFilter, 300); // debounce the clicks on select options to avoid too many requests
   const skip = page * rowsPerPage;
   const { data, loading, error } = useGetData({
     rowsPerPage,
     skip,
     filterByStatus: debouncedStatuses,
   });
+  const [currentTab, setCurrentTab] = useState(0);
+  const favourites = useFavouritesStore((state) => state.favourites);
+
+  const displayData =
+    currentTab === 0 ? (data?.results ?? []) : favourites.map((bill) => ({ bill }));
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -45,6 +53,7 @@ const DataTable = () => {
 
   const handleRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(Number(event.target.value));
+    setPage(0);
   };
 
   const onFilterChange = (payload: string[]) => {
@@ -52,9 +61,18 @@ const DataTable = () => {
     setPage(0);
   };
 
+  const handleTabChange = (_event: React.SyntheticEvent, value: number) => {
+    setCurrentTab(value);
+  };
+
   return (
     <Paper sx={{ padding: '20px' }}>
-      <StatusFilter onFilterChange={onFilterChange} />
+      <Tabs value={currentTab} onChange={handleTabChange} sx={{ marginBottom: 2 }}>
+        <Tab label="All bills" />
+        <Tab label={`Favourites ${favourites.length}`} />
+      </Tabs>
+
+      {currentTab === 0 && <StatusFilter onFilterChange={onFilterChange} />}
 
       <TableContainer sx={{ height: '60vh' }}>
         <Table stickyHeader aria-label="sticky table">
@@ -73,24 +91,27 @@ const DataTable = () => {
               </TableRow>
             )}
 
-            {!loading && data?.results.map(({ bill }) => <DataTableRow bill={bill} />)}
+            {!loading &&
+              displayData.map(({ bill }) => <DataTableRow key={bill.shortTitleEn} bill={bill} />)}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <TablePagination
-        component="div"
-        count={resultsCount}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsPerPage}
-        sx={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: isMobile ? 'stretch' : 'center',
-        }}
-      />
+      {currentTab === 0 && (
+        <TablePagination
+          component="div"
+          count={resultsCount}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPage}
+          sx={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'stretch' : 'center',
+          }}
+        />
+      )}
     </Paper>
   );
 };

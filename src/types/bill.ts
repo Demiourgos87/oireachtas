@@ -25,6 +25,8 @@ export interface Bill {
   billYear: string;
   shortTitleEn: string;
   shortTitleGa: string;
+  longTitleEn: string;
+  longTitleGa: string;
   status: string;
   sponsors: BillSponsor[];
   uri: string;
