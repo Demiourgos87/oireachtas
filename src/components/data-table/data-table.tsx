@@ -1,6 +1,6 @@
 import { useDebounce } from 'use-debounce';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import ErrorComponent from '@components/error-component/error-component';
 import Loading from '@components/loading/loading';
@@ -29,7 +29,7 @@ const DataTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
-  const [debouncedStatuses] = useDebounce(statusFilter, 300); // debounce the clicks on select options to avoid too many requests
+  const [debouncedStatuses] = useDebounce(statusFilter, 200); // debounce the clicks on select options to avoid too many requests
   const skip = page * rowsPerPage;
   const { data, loading, error } = useGetData({
     rowsPerPage,
@@ -39,8 +39,10 @@ const DataTable = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const favourites = useFavouritesStore((state) => state.favourites);
 
-  const displayData =
-    currentTab === 0 ? (data?.results ?? []) : favourites.map((bill) => ({ bill }));
+  // This calculation memoization might not be necessary, since it is not causing performance issues, I just put it there to show how could it be done
+  const displayData = useMemo(() => {
+    return currentTab === 0 ? (data?.results ?? []) : favourites.map((bill) => ({ bill }));
+  }, [currentTab, data?.results, favourites]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import { Bill } from '@custom-types/bill';
 import StarIcon from '@mui/icons-material/Star';
@@ -10,6 +10,10 @@ import useFavouritesStore from '@stores/favourite-bills-store';
 interface BillRowProps {
   bill: Bill;
 }
+
+const sanitizeHTML = (str: string) => {
+  return DOMPurify.sanitize(str);
+};
 
 const modalBoxStyle = {
   position: 'absolute',
@@ -23,7 +27,7 @@ const modalBoxStyle = {
   p: 4,
 };
 
-const DataTableRow = ({ bill }: BillRowProps) => {
+const DataTableRow = memo(({ bill }: BillRowProps) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
   const isFavourite = useFavouritesStore((state) => state.isFavourite(bill.shortTitleEn));
@@ -38,18 +42,11 @@ const DataTableRow = ({ bill }: BillRowProps) => {
     setCurrentTab(value);
   };
 
-  const sanitizeHTML = (str: string) => {
-    return DOMPurify.sanitize(str);
-  };
-
   const handleToggleFavourite = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
 
-    if (isFavourite) {
-      removeFavourite(bill);
-    } else {
-      addFavourite(bill);
-    }
+    if (isFavourite) removeFavourite(bill);
+    else addFavourite(bill);
   };
 
   return (
@@ -105,6 +102,6 @@ const DataTableRow = ({ bill }: BillRowProps) => {
       </Modal>
     </>
   );
-};
+});
 
 export default DataTableRow;
