@@ -33,6 +33,7 @@
       "@hooks/*": ["hooks/*"],
       "@stores/*": ["stores/*"],
       "@styles/*": ["styles/*"],
+      "@mocks/*": ["__mocks__/*"],
       "@custom-types/*": ["types/*"],
       "@utils/*": ["utils/*"]
     }

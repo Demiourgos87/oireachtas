@@ -41,6 +41,8 @@ The development server starts at [http://localhost:5173](http://localhost:5173) 
 ```
 src
 |
++--__mocks__    # mocks used for testing
+|
 +--api          # exported API request declarations and api hooks
 |
 +--assets       # contains all the static files such as images, fonts, etc
@@ -104,8 +106,4 @@ Some other performance optimization used is debouncing the clicks on filters.
 
 
 ## 9 - Testing
-
-
-
-## Additional considerations
-Some features i would like to have added are snackbars for information on adding or removing a bill from favourites
+Unit tests are done using Vitest, and just as an example, only a small part of the functionality is tested, inside the `DataTable` component.
