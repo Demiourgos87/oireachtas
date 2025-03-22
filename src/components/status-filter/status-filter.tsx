@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+// import { useState } from 'react';
 import {
   Box,
   Button,
@@ -12,13 +11,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import useFiltersStore from '@stores/filters-store';
 
 interface StatusFilterProps {
   onFilterChange: (selectedStatuses: string[]) => void;
 }
 
 const StatusFilter = ({ onFilterChange }: StatusFilterProps) => {
-  const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const { filters, setFilters, removeFilters } = useFiltersStore();
 
   const statuses = ['Current', 'Withdrawn', 'Enacted', 'Rejected', 'Defeated', 'Lapsed'];
 
@@ -28,12 +28,12 @@ const StatusFilter = ({ onFilterChange }: StatusFilterProps) => {
   const handleStatusChange = (event: SelectChangeEvent<string[]>) => {
     const value = event.target.value as string[];
 
-    setStatusFilter(value);
+    setFilters(value);
     onFilterChange(value);
   };
 
   const clearStatusFilter = () => {
-    setStatusFilter([]);
+    removeFilters();
     onFilterChange([]);
   };
 
@@ -58,7 +58,7 @@ const StatusFilter = ({ onFilterChange }: StatusFilterProps) => {
           multiple
           labelId="bill-status-label"
           id="bill-status-select"
-          value={statusFilter}
+          value={filters}
           onChange={handleStatusChange}
           sx={{ width: isMobile ? '10rem' : '20rem' }}
         >
@@ -70,7 +70,7 @@ const StatusFilter = ({ onFilterChange }: StatusFilterProps) => {
         </Select>
       </FormControl>
 
-      {statusFilter.length !== 0 && (
+      {filters.length !== 0 && (
         <Button onClick={clearStatusFilter} sx={{ marginLeft: 2 }}>
           Clear status
         </Button>

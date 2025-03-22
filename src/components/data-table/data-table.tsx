@@ -21,15 +21,16 @@ import {
   useTheme,
 } from '@mui/material';
 import useFavouritesStore from '@stores/favourite-bills-store';
+import useFiltersStore from '@stores/filters-store';
 
 import DataTableHead from './components/data-table-head';
 import DataTableRow from './components/data-table-row';
 
 const DataTable = () => {
+  const { filters, setFilters, removeFilters } = useFiltersStore();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [statusFilter, setStatusFilter] = useState<string[]>([]);
-  const [debouncedStatuses] = useDebounce(statusFilter, 200); // debounce the clicks on select options to avoid too many requests
+  const [debouncedStatuses] = useDebounce(filters, 200); // debounce the clicks on select options to avoid too many requests
   const skip = page * rowsPerPage;
   const { data, loading, error } = useGetData({
     rowsPerPage,
@@ -59,7 +60,8 @@ const DataTable = () => {
   };
 
   const onFilterChange = (payload: string[]) => {
-    setStatusFilter(payload);
+    if (payload.length) setFilters(payload);
+    else removeFilters();
     setPage(0);
   };
 

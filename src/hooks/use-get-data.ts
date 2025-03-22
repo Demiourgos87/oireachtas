@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Bills } from '@custom-types/bill';
+import { DataParams } from '@custom-types/data';
 import { ErrorResponse } from '@custom-types/error';
+import { buildQueryString } from '@utils/build-query-string';
 import { endpoints } from '@utils/endpoints';
-
-interface DataParams {
-  rowsPerPage: number;
-  skip: number;
-  filterByStatus?: string[];
-}
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -20,24 +16,11 @@ const useGetData = ({ rowsPerPage, skip, filterByStatus }: DataParams) => {
   const legislationEndpoint = endpoints.legislation;
   const uri = `${API_BASE_URL}${legislationEndpoint}`;
 
-  const buildQueryString = () => {
-    const params = new URLSearchParams();
-
-    params.append('limit', rowsPerPage.toString());
-    params.append('skip', skip.toString());
-
-    if (filterByStatus && filterByStatus.length > 0) {
-      params.append('bill_status', filterByStatus.join(','));
-    }
-
-    return params.toString();
-  };
-
-  const getData = async () => {
+  const getData = useCallback(async () => {
     setLoading(true);
 
     try {
-      const queryString = buildQueryString();
+      const queryString = buildQueryString({ rowsPerPage, skip, filterByStatus });
       const response = await fetch(`${uri}?${queryString}`);
       const data = await response.json();
 
@@ -48,12 +31,11 @@ const useGetData = ({ rowsPerPage, skip, filterByStatus }: DataParams) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filterByStatus, rowsPerPage, skip, uri]);
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rowsPerPage, skip, filterByStatus]);
+  }, [getData]);
 
   return { data, loading, error };
 };
